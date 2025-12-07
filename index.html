@@ -142,28 +142,27 @@
             </div>
         </details>
 
-        <!-- CHAPTER 5 -->
+        <!-- CHAPTER 5: VLSM DESIGN CHALLENGE -->
         <details class="chapter scroll-animate" id="chapter-5">
-    <summary>Chapter 5: Advanced Concepts (VLSM)</summary>
+            <summary>Chapter 5: VLSM Design Challenge</summary>
             <div class="chapter-content">
-                <p><strong>Variable Length Subnet Masking (VLSM)</strong> is an efficiency technique. Instead of cutting all subnets into equal sizes, you cut them into different sizes based on need, preventing wasted IP addresses.</p>
+                <p>Real-world networks are not one-size-fits-all. <strong>Variable Length Subnet Masking (VLSM)</strong> is the CCNA skill of taking one large address block and carving it up into multiple, different-sized subnets to perfectly match the host requirements of different departments or locations. The goal is maximum efficiency.</p>
+                <h3>The Mission</h3>
+                <p>You have been assigned the address block <code>10.10.0.0 /16</code>. Your mission is to create an efficient IP addressing scheme for the following new departments:</p>
+                <ul id="vlsmRequirements"></ul>
+                <p><strong>Your Task:</strong> Starting with the largest requirement first, calculate the most efficient subnet for each department. Fill in the Network ID and the CIDR suffix you would assign to each.</p>
                 <div class="interactive-area">
-                    <h3>VLSM Diagram: /24 sliced into two /25s</h3>
-                    <div class="vlsm-diagram">
-                        /24 Block (e.g., 192.168.0.0/24)
-                        <div class="split-line"></div>
-                        <div class="vlsm-sub-container">
-                            <div class="vlsm-box" style="border-color:var(--net-color)">/25 Subnet 1<br>(128 IPs)</div>
-                            <div class="vlsm-box" style="border-color:var(--host-color)">/25 Subnet 2<br>(128 IPs)</div>
-                        </div>
-                    </div>
+                    <h3>VLSM Allocation Table</h3>
+                    <div id="vlsmTable"></div>
+                    <button id="vlsmCheckBtn" class="btn" style="margin-top: 1rem;">Check Allocation</button>
+                    <div id="vlsmFeedback" style="margin-top: 1rem; padding: 1rem; border-radius: 8px; display: none;"></div>
                 </div>
             </div>
         </details>
 
-<!-- CHAPTER 7 -->
-<details class="chapter scroll-animate" id="chapter-6">
-    <summary>Chapter 6: The Gauntlet</summary>
+        <!-- CHAPTER 6 -->
+        <details class="chapter scroll-animate" id="chapter-6">
+            <summary>Chapter 6: The Gauntlet</summary>
             <div class="chapter-content">
                 <p>Test your skills. Select a difficulty and prove your mastery. Wrong answers will provide a hint explaining the logic.</p>
                 <div class="interactive-area">
@@ -182,16 +181,36 @@
             </div>
         </details>
         
-        <!-- CHAPTER 7: Wildcard Drill -->
+        <!-- CHAPTER 7: ROUTE SUMMARIZATION -->
         <details class="chapter scroll-animate" id="chapter-7">
-            <summary>Chapter 7: The Wildcard Drill</summary>
+            <summary>Chapter 7: Mission Debrief - Route Summarization</summary>
             <div class="chapter-content">
-                <p>A <strong>Wildcard Mask</strong> is the inverse of a subnet mask, used in router and firewall Access Control Lists (ACLs). To calculate it, subtract each subnet mask octet from 255.</p>
-                <p>Example: A mask of 255.255.255.240 becomes a wildcard of 0.0.0.15.</p>
+                <p>Route Summarization (or Aggregation) is the reverse of subnetting. Instead of breaking a large network into smaller ones, you take multiple smaller networks and represent them as a single summary route. This is essential for keeping routing tables small and efficient.</p>
+                <h3>How to Summarize Routes</h3>
+                <ol>
+                    <li><strong>List the Networks:</strong> Write down all the network IDs you need to summarize.</li>
+                    <li><strong>Convert to Binary:</strong> Convert the octet where the networks differ into binary. For example, to summarize 192.168.<strong>4</strong>.0, 192.168.<strong>5</strong>.0, 192.168.<strong>6</strong>.0, and 192.168.<strong>7</strong>.0, we look at the third octet.</li>
+                    <li><strong>Find the Common Bits:</strong> Compare the binary values and find how many bits they share from left to right.
+                        <pre style="font-family: var(--font-mono); background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px;">
+192.168.4.0 = 11000000.10101000.00000<strong style="color:var(--net-color)">100</strong>.00000000
+192.168.5.0 = 11000000.10101000.00000<strong style="color:var(--net-color)">101</strong>.00000000
+192.168.6.0 = 11000000.10101000.00000<strong style="color:var(--net-color)">110</strong>.00000000
+192.168.7.0 = 11000000.10101000.00000<strong style="color:var(--net-color)">111</strong>.00000000
+                        </pre>
+                        The first 21 bits are identical.
+                    </li>
+                    <li><strong>Create the Summary Route:</strong> The summary address is the lowest network ID in the range (192.168.4.0), and the new CIDR is the number of common bits (/21). So, the summary is <strong>192.168.4.0 /21</strong>.</li>
+                </ol>
                 <div class="interactive-area">
-                    <div class="quiz-question" id="wildcardQuizQuestion"></div>
-                    <div class="quiz-options" id="wildcardQuizOptions"></div>
-                    <div id="wildcardQuizFeedback"></div>
+                    <h3>Summarization Drill</h3>
+                    <p>You are given the following list of networks. What is the correct summary route?</p>
+                    <div class="quiz-question" id="summaryProblem"></div>
+                    <div class="calculator-input" style="margin-top: 1rem;">
+                        <input type="text" id="summaryAddress" placeholder="Summary Address...">
+                        <input type="text" id="summaryCidr" placeholder="/CIDR...">
+                    </div>
+                    <button id="summaryCheckBtn" class="btn">Check Summary</button>
+                    <div id="summaryFeedback" style="margin-top: 1rem; padding: 1rem; border-radius: 8px; display: none;"></div>
                 </div>
             </div>
         </details>
@@ -221,6 +240,21 @@
             </div>
         </details>
 
+        <!-- CHAPTER 10: TROUBLESHOOTING SCENARIO -->
+        <details class="chapter scroll-animate" id="chapter-10">
+            <summary>Chapter 10: Troubleshooting Scenario</summary>
+            <div class="chapter-content">
+                <p>A critical skill for any network technician is troubleshooting. You've been called in to fix an office network where some users can't access the internet. You suspect an IP addressing issue.</p>
+                <h3>The Network</h3>
+                <p>The office is supposed to be using the <code>192.168.100.0 /26</code> network.</p>
+                <div class="interactive-area">
+                    <h3>Device Configurations</h3>
+                    <p>Below are the IP configurations for several devices. At least one of them is incorrect. Your mission is to find the error.</p>
+                    <table id="troubleTable" style="width:100%; font-family:var(--font-mono); text-align:left;"></table>
+                    <div id="troubleFeedback" style="margin-top: 1rem; padding: 1rem; border-radius: 8px; display: none;"></div>
+                </div>
+            </div>
+        </details>
     </main>
     <script src="script.js"></script>
 </body>

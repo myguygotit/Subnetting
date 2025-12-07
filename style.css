@@ -1,5 +1,4 @@
-
-      /*
+/*
       ===================================================================================
       THEME & CORE STYLES: RCAF CYBER COMMAND
       - Military Cyber Interface: Deep navy, grid lines, and glowing accents.
@@ -20,6 +19,11 @@
         --radius: 12px;
         --font-body: 'Segoe UI', system-ui, -apple-system, sans-serif;
         --font-mono: 'Roboto Mono', ui-monospace, monospace;
+      }
+
+      @keyframes shimmer {
+        0% { background-position: -1000px 0; }
+        100% { background-position: 1000px 0; }
       }
 
       * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -52,6 +56,7 @@
         margin-bottom: 1rem;
         border-bottom: 1px solid var(--glass-border);
         padding-bottom: 1rem;
+        position: relative;
       }
       .main-header h1 {
         font-size: 2.5rem;
@@ -59,6 +64,13 @@
         color: var(--host-color);
         letter-spacing: 1px;
         text-shadow: 0 0 15px rgba(0, 204, 255, 0.2);
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(to right, #00ccff, #e6f1ff, #00ccff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: shimmer 5s infinite linear;
+        background-size: 200% auto;
       }
       
       /* 
@@ -113,6 +125,13 @@
       }
       .chapter-content ul { list-style-position: inside; padding-left: 1rem; }
       .chapter-content strong { color: var(--gold-color); }
+      .chapter-content code {
+        background: rgba(0,0,0,0.2);
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+        font-family: var(--font-mono);
+      }
+
 
       .interactive-area {
         margin-top: 1.5rem;
@@ -155,14 +174,6 @@
       .bit-toggle .value { font-size: 0.9rem; color: var(--text-secondary); margin-top: 4px; }
       .byte-total { text-align: center; margin-top: 1rem; font-size: 2rem; font-weight: 700; color: var(--gold-color); }
 
-      /* Chapter 2: CIDR Slider */
-      .slider-container { display: flex; flex-direction: column; gap: 1rem; }
-      #cidrSlider { width: 100%; }
-      .bar-chart { display: flex; height: 40px; background: rgba(0,0,0,0.2); border-radius: 4px; overflow: hidden; }
-      #networksBar { background: var(--net-color); transition: width 0.3s ease; }
-      #hostsBar { background: var(--host-color); transition: width 0.3s ease; }
-      .bar-labels { display: flex; justify-content: space-between; font-size: 0.9rem; margin-top: 0.5rem; }
-
       /* Chapter 4: Calculator */
       .calculator-input { display: flex; gap: 1rem; margin-bottom: 1rem; }
       .calculator-input input {
@@ -195,11 +206,7 @@
       .option-btn:hover { background: rgba(255,255,255,0.1); }
       #quizFeedback { margin-top: 1rem; padding: 1rem; border-radius: 8px; display: none; }
       
-      /* 
-       * ===================================================================================
-       * CHAPTER 7: AI CHAT MENTOR
-       * ===================================================================================
-      */
+      /* CHAT MENTOR */
       #aiChatWindow {
         height: 300px;
         overflow-y: auto;
@@ -242,6 +249,46 @@
         font-size: 1rem;
       }
 
+      /* THEME SWITCHER */
+      #themeToggle {
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
+        background: var(--panel-bg);
+        border: 1px solid var(--glass-border);
+        color: var(--text-primary);
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-family: var(--font-body);
+      }
+      body.light-theme {
+        --bg-navy: #f8f9fa; /* A soft, off-white */
+        --panel-bg: #ffffff;
+        --glass-border: rgba(0, 0, 0, 0.1);
+        --text-primary: #212529; /* A dark grey for high contrast */
+        --text-secondary: #495057; /* A slightly lighter grey */
+        --net-color: #008a4f;
+        --host-color: #006cbf;
+        --gold-color: #b87d00;
+        --red-color: #d93030;
+        background-image: 
+            linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+      }
+      body.light-theme .main-header h1 {
+          -webkit-text-fill-color: var(--host-color);
+          text-shadow: none;
+      }
+      body.light-theme .chapter {
+          backdrop-filter: none;
+          -webkit-backdrop-filter: none;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      }
+      body.light-theme .chat-message.user .text { background-color: #d8eaff; }
+      body.light-theme .chat-message.ai .text { background-color: #f1f3f5; }
+      body.light-theme code { background: rgba(0,0,0,0.08); }
+
 
       /* Responsive */
       @media (max-width: 768px) {
@@ -249,40 +296,5 @@
         .chapter summary { font-size: 1.2rem; padding: 1rem; }
         .chapter-content { padding: 0 1rem 1rem 1rem; }
         .quiz-options { grid-template-columns: 1fr; }
+        #themeToggle { top: 1rem; right: 1rem; }
       }
-body.light-theme {
-    --bg-navy: #F0EAD6;
-    --panel-bg: rgba(255, 255, 255, 0.6);
-    --glass-border: rgba(0, 0, 0, 0.1);
-    --text-primary: #3a3a3a;
-    --text-secondary: #5c5c5c;
-    --net-color: #008a4f;
-    --host-color: #006cbf;
-    --gold-color: #c78d00;
-    --red-color: #d93030;
-    background-image: 
-        linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
-}
-.light-theme .main-header h1 {
-    color: var(--host-color);
-    text-shadow: none;
-}
-.light-theme .chapter {
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-}
-.light-theme .chat-message.user .text { background-color: #d1e3ff; }
-.light-theme .chat-message.ai .text { background-color: #e1e1e1; }
-#themeToggle {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: var(--panel-bg);
-    border: 1px solid var(--glass-border);
-    color: var(--text-primary);
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-}
-    
