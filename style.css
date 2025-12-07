@@ -1,0 +1,288 @@
+
+      /*
+      ===================================================================================
+      THEME & CORE STYLES: RCAF CYBER COMMAND
+      - Military Cyber Interface: Deep navy, grid lines, and glowing accents.
+      - Strict Color Palette: Neon Green (Network), Cyan (Host), Gold (Theory/Emphasis).
+      - Font: Modern sans-serif for UI, monospace for technical data.
+      ===================================================================================
+      */
+      :root {
+        --bg-navy: #0A0F1E;
+        --panel-bg: rgba(15, 22, 42, 0.7);
+        --glass-border: rgba(0, 180, 255, 0.2);
+        --text-primary: #E6F1FF;
+        --text-secondary: #A0B3D4;
+        --net-color: #00ff88;
+        --host-color: #00ccff;
+        --gold-color: #FFD700;
+        --red-color: #ff4747;
+        --radius: 12px;
+        --font-body: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        --font-mono: 'Roboto Mono', ui-monospace, monospace;
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        background-color: var(--bg-navy);
+        color: var(--text-primary);
+        font-family: var(--font-body);
+        line-height: 1.7;
+        /* Grid background effect */
+        background-image: 
+          linear-gradient(rgba(0, 180, 255, 0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0, 180, 255, 0.05) 1px, transparent 1px);
+        background-size: 30px 30px;
+      }
+
+      .course-container {
+        max-width: 1000px;
+        margin: 2rem auto;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      
+      .main-header {
+        text-align: center;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid var(--glass-border);
+        padding-bottom: 1rem;
+      }
+      .main-header h1 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--host-color);
+        letter-spacing: 1px;
+        text-shadow: 0 0 15px rgba(0, 204, 255, 0.2);
+      }
+      
+      /* 
+       * ===================================================================================
+       * COLLAPSIBLE CHAPTERS
+       * ===================================================================================
+      */
+      .chapter {
+        background: var(--panel-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        transition: background-color 0.3s ease;
+      }
+      .chapter[open] { background: rgba(20, 28, 50, 0.8); }
+      .chapter summary {
+        display: flex;
+        align-items: center;
+        padding: 1.5rem;
+        cursor: pointer;
+        outline: none;
+        font-size: 1.5rem;
+        font-weight: 700;
+      }
+      .chapter summary::-webkit-details-marker { display: none; }
+      .chapter summary::before {
+        content: '►';
+        font-size: 1rem;
+        margin-right: 1rem;
+        color: var(--host-color);
+        transition: transform 0.3s ease;
+      }
+      .chapter[open] > summary::before { transform: rotate(90deg); }
+      .chapter-content { padding: 0 1.5rem 1.5rem 1.5rem; }
+      
+      /* New Scroll Animation Classes */
+      .scroll-animate {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      }
+      .scroll-animate.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .chapter-content p, .chapter-content ul {
+        color: var(--text-secondary);
+        margin-bottom: 1rem;
+        max-width: 75ch;
+      }
+      .chapter-content ul { list-style-position: inside; padding-left: 1rem; }
+      .chapter-content strong { color: var(--gold-color); }
+
+      .interactive-area {
+        margin-top: 1.5rem;
+        padding: 1.5rem;
+        background: rgba(0,0,0,0.2);
+        border-radius: 8px;
+        border: 1px solid var(--glass-border);
+      }
+      
+      h3 {
+          font-size: 1.2rem;
+          color: var(--gold-color);
+          margin-bottom: 0.5rem;
+          border-bottom: 1px solid var(--glass-border);
+          padding-bottom: 0.5rem;
+      }
+      
+      .btn {
+        background: linear-gradient(90deg, var(--net-color), var(--host-color));
+        color: #001;
+        padding: 12px 24px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 1rem;
+        transition: opacity 0.2s ease;
+      }
+      .btn:hover { opacity: 0.9; }
+
+      /* Chapter 1: Binary Switchboard */
+      .byte-switchboard { display: grid; grid-template-columns: repeat(8, 1fr); gap: 10px; }
+      .bit-toggle {
+        aspect-ratio: 1 / 1; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+        background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border);
+        cursor: pointer; font-family: var(--font-mono); transition: all .2s ease; user-select: none;
+      }
+      .bit-toggle.on { background: rgba(0, 255, 136, 0.15); border-color: var(--net-color); }
+      .bit-toggle .power { font-size: 1.1rem; font-weight: 700; }
+      .bit-toggle .value { font-size: 0.9rem; color: var(--text-secondary); margin-top: 4px; }
+      .byte-total { text-align: center; margin-top: 1rem; font-size: 2rem; font-weight: 700; color: var(--gold-color); }
+
+      /* Chapter 2: CIDR Slider */
+      .slider-container { display: flex; flex-direction: column; gap: 1rem; }
+      #cidrSlider { width: 100%; }
+      .bar-chart { display: flex; height: 40px; background: rgba(0,0,0,0.2); border-radius: 4px; overflow: hidden; }
+      #networksBar { background: var(--net-color); transition: width 0.3s ease; }
+      #hostsBar { background: var(--host-color); transition: width 0.3s ease; }
+      .bar-labels { display: flex; justify-content: space-between; font-size: 0.9rem; margin-top: 0.5rem; }
+
+      /* Chapter 4: Calculator */
+      .calculator-input { display: flex; gap: 1rem; margin-bottom: 1rem; }
+      .calculator-input input {
+        flex: 1; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border);
+        padding: 10px 14px; border-radius: 8px; color: var(--text-primary);
+        font-family: var(--font-mono); font-size: 1.1rem;
+      }
+      .calc-log { font-family: var(--font-mono); font-size: 1rem; min-height: 150px; background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 8px; }
+      .log-line { opacity: 0; transition: opacity 0.5s ease; }
+      .log-line.visible { opacity: 1; }
+      .calc-results { margin-top: 1rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 10px; }
+      .result-card { background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; }
+      .result-card .label { font-size: 0.8rem; color: var(--text-secondary); }
+      .result-card .value { font-size: 1.1rem; font-family: var(--font-mono); font-weight: 700; }
+      .value.net { color: var(--net-color); }
+      .value.host { color: var(--host-color); }
+      
+      /* Chapter 5: VLSM Diagram */
+      .vlsm-diagram { position: relative; border: 2px solid var(--gold-color); padding: 1rem; border-radius: 8px; background: rgba(255, 215, 0, 0.05); text-align: center; margin-top: 1rem; }
+      .vlsm-diagram .vlsm-box { border: 1px solid var(--text-secondary); padding: 1rem; margin: 0.5rem; }
+      .vlsm-diagram .split-line { position: absolute; left: 50%; top: 3.5rem; bottom: 0.5rem; border-left: 2px dashed var(--net-color); }
+      .vlsm-sub-container { display: flex; justify-content: space-around; }
+
+      /* Chapter 6: Quiz */
+      .quiz-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+      #quizDifficulty { background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); padding: 8px; border-radius: 8px; color: var(--text-primary); font-family: var(--font-body); }
+      .quiz-question { margin: 1rem 0; font-size: 1.2rem; text-align: center; }
+      .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+      .option-btn { background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); color: var(--text-primary); padding: 1rem; border-radius: 8px; cursor: pointer; text-align: center; transition: background 0.2s; font-family: var(--font-mono); font-size: 1rem; }
+      .option-btn:hover { background: rgba(255,255,255,0.1); }
+      #quizFeedback { margin-top: 1rem; padding: 1rem; border-radius: 8px; display: none; }
+      
+      /* 
+       * ===================================================================================
+       * CHAPTER 7: AI CHAT MENTOR
+       * ===================================================================================
+      */
+      #aiChatWindow {
+        height: 300px;
+        overflow-y: auto;
+        background: rgba(0,0,0,0.3);
+        border: 1px solid var(--glass-border);
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+      }
+      .chat-message {
+        margin-bottom: 1rem;
+        display: flex;
+        flex-direction: column;
+      }
+      .chat-message .author {
+        font-size: 0.8rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+      }
+      .chat-message .text {
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        max-width: 80%;
+      }
+      .chat-message.user { align-items: flex-end; }
+      .chat-message.user .author { color: var(--host-color); }
+      .chat-message.user .text { background-color: #1E293B; }
+      .chat-message.ai .author { color: var(--net-color); }
+      .chat-message.ai .text { background-color: #334155; }
+      .chat-message.ai .text strong { color: var(--gold-color); }
+      
+      #aiChatInput {
+        width: 100%;
+        background: rgba(0,0,0,0.2);
+        border: 1px solid var(--glass-border);
+        padding: 12px;
+        border-radius: 8px;
+        color: var(--text-primary);
+        font-family: var(--font-mono);
+        font-size: 1rem;
+      }
+
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .main-header h1 { font-size: 1.8rem; }
+        .chapter summary { font-size: 1.2rem; padding: 1rem; }
+        .chapter-content { padding: 0 1rem 1rem 1rem; }
+        .quiz-options { grid-template-columns: 1fr; }
+      }
+body.light-theme {
+    --bg-navy: #F0EAD6;
+    --panel-bg: rgba(255, 255, 255, 0.6);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --text-primary: #3a3a3a;
+    --text-secondary: #5c5c5c;
+    --net-color: #008a4f;
+    --host-color: #006cbf;
+    --gold-color: #c78d00;
+    --red-color: #d93030;
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+}
+.light-theme .main-header h1 {
+    color: var(--host-color);
+    text-shadow: none;
+}
+.light-theme .chapter {
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+.light-theme .chat-message.user .text { background-color: #d1e3ff; }
+.light-theme .chat-message.ai .text { background-color: #e1e1e1; }
+#themeToggle {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--panel-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+}
+    
